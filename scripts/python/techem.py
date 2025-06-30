@@ -43,7 +43,8 @@ def get_token(techem_email: str, techem_password: str) -> str:
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
         "Referer": "https://beboer.techemadmin.no/",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
     }
 
     try:
@@ -115,6 +116,7 @@ def get_data(techem_email: str, techem_password: str, object_id: int, yearly: bo
         "Referer": "https://beboer.techemadmin.no/",
         "Authorization": f"JWT {token}",
         "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
     }
 
     try:
