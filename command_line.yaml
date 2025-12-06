@@ -1,9 +1,0 @@
-- sensor:
-    name: techem_yearly
-    command: !secret techem_command_yearly
-    scan_interval: 3600
-
-- sensor:
-    name: techem_weekly
-    command: !secret techem_command_weekly
-    scan_interval: 3600

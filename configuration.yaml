@@ -1,2 +1,0 @@
-template: !include template.yaml
-command_line: !include command_line.yaml
