@@ -4,6 +4,8 @@ A Home Assistant integration for monitoring energy and water consumption from Te
 
 This integration provides real-time access to your Techem consumption data directly in Home Assistant with automatic updates every hour.
 
+<img width="1912" height="1207" alt="image" src="https://github.com/user-attachments/assets/a6a7eb2d-13d8-4c01-b3c3-44ab4a30c5d9" />
+
 ![Techem Dashboard Example](https://via.placeholder.com/800x400?text=Dashboard+Example)
 
 ## Features
