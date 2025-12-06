@@ -33,6 +33,15 @@ Koden er oversatt og utviklet med utgangspunkt i [@khaffner](https://github.com/
 2. Oppdater passordet i ```secrets.yaml``` (techem_password) til [TechemAdmin](https://beboer.techemadmin.dk/) passordet ditt
 3. Oppdater ID i ```secrets.yaml``` (techem_objectId) til den ~20 tegn lange koden du fant i forrige del
 
+## Viktig om passord med spesialtegn
+
+Hvis Techem-passordet ditt inneholder spesialtegn (!, $, #, %, etc.), må du bruke enkle anførselstegn rundt passordet i `secrets.yaml`:
+```yaml
+techem_command_yearly: python3 /config/scripts/python/techem.py din@email.com 'DittPassord123!@#' dinObjectId True
+```
+
+Uten anførselstegn vil Home Assistant feiltolke spesialtegnene.
+
 **Til slutt:** Restart HA og verifiser at begge hovedsensorene og de seks utledede templatesensorene finnes i (Innstillinger -> Enheter og tjenester -> Entiteter):
 - ```sensor.techem_yearly```
 - ```sensor.techem_weekly```

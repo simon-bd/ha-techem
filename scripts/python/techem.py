@@ -3,20 +3,15 @@ import requests
 import datetime
 import json
 
-# Get date (YYYY-MM-DD) n days ago
 def get_date_as_string(n: int) -> str:
     today = datetime.datetime.now()
     date = today - datetime.timedelta(days=n)
-
     return f"{date.year}-{date.month:02d}-{date.day:02d}"
 
-# Get date (YYYY-MM-DD) of first day of year
 def get_first_date_as_string() -> str:
     first_day = datetime.datetime(datetime.datetime.now().year, 1, 1)
-
     return f"{first_day.year}-{first_day.month:02d}-{first_day.day:02d}"
 
-# Request token
 def get_token(techem_email: str, techem_password: str) -> str:
     url = "https://techemadmin.dk/analytics/graphql"
 
@@ -55,33 +50,38 @@ def get_token(techem_email: str, techem_password: str) -> str:
             timeout=10.0
         )
         response.raise_for_status()
-
-        return response.json()["data"]["loginWithEmailAndPassword"]["ok"]["token"]
+        
+        data = response.json()
+        
+        # Safer access with error checking
+        if "data" not in data:
+            return ""
+        
+        login_data = data.get("data", {}).get("loginWithEmailAndPassword", {})
+        ok_data = login_data.get("ok")
+        
+        if ok_data is None:
+            return ""
+        
+        token = ok_data.get("token", "")
+        return token
     
-    except requests.exceptions.RequestException:
-        return ""
-    except KeyError:
+    except (requests.exceptions.RequestException, KeyError, ValueError):
         return ""
 
-def get_data(techem_email: str, techem_password: str, object_id: int, yearly: bool, days_offset: int) -> str:
+def get_data(techem_email: str, techem_password: str, object_id: str, yearly: bool, days_offset: int) -> str:
     token = get_token(techem_email, techem_password)
 
     if not token:
         return ""
 
     if yearly:
-        # Get data from entire current year
         start_time = get_first_date_as_string()
         end_time = get_date_as_string(days_offset)
-
-        # Compare with previous year
         compare_period = "previous-year"
     else:
-        # Get data from previous seven days
         start_time = get_date_as_string(days_offset + 7)
         end_time = get_date_as_string(days_offset)
-
-        # Compare with previous seven days
         compare_period = "previous-period"
 
     url = "https://techemadmin.dk/analytics/graphql"
@@ -100,7 +100,7 @@ def get_data(techem_email: str, techem_password: str, object_id: int, yearly: bo
         "variables": {
             "table": {
                 "aggregationLevel": "UNIT",
-                "objectId": str(object_id),
+                "objectId": object_id,
                 "periodBegin": f"{start_time}T00:00:00",
                 "periodEnd": f"{end_time}T00:00:00",
                 "compareWith": compare_period
@@ -128,26 +128,40 @@ def get_data(techem_email: str, techem_password: str, object_id: int, yearly: bo
         )
         response.raise_for_status()
 
-        data = response.json()["data"]["tenantTable"]["rows"][0]
-        return json.dumps(data)
+        data = response.json()
+        
+        # Safer access with error checking
+        if "data" not in data:
+            return ""
+        
+        tenant_table = data.get("data", {}).get("tenantTable", {})
+        rows = tenant_table.get("rows", [])
+        
+        if not rows or len(rows) == 0:
+            return ""
+        
+        return json.dumps(rows[0])
     
-    except requests.exceptions.RequestException:
-        return ""
-    except KeyError:
+    except (requests.exceptions.RequestException, KeyError, ValueError, IndexError):
         return ""
 
 def main() -> None:
+    if len(sys.argv) < 5:
+        sys.exit(1)
+    
     email = sys.argv[1]
     password = sys.argv[2]
-    id = sys.argv[3]
+    object_id = sys.argv[3]
     yearly = sys.argv[4] == "True"
 
     offset = 1
 
-    result = get_data(email, password, id, yearly, offset)
+    result = get_data(email, password, object_id, yearly, offset)
 
     if result:
         print(result)
+    else:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
