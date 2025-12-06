@@ -43,6 +43,10 @@ async def async_setup_entry(
         update_method=lambda: hass.async_add_executor_job(api.get_data, False),
         update_interval=SCAN_INTERVAL,
     )
+    
+    # Fetch initial data
+    await yearly_coordinator.async_config_entry_first_refresh()
+    await weekly_coordinator.async_config_entry_first_refresh()
 
     object_id = entry.data[CONF_OBJECT_ID]
 
