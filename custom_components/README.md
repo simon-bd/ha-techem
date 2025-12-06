@@ -180,5 +180,5 @@ If you find this integration helpful, consider:
 - 💡 Suggesting new features
 
 ---
-
+ 
 **Note**: This is an unofficial integration and is not affiliated with or endorsed by Techem.
