@@ -6,7 +6,6 @@ This integration provides near real-time access to your Techem consumption data,
 
 <img width="1912" height="1207" alt="image" src="https://github.com/user-attachments/assets/01dc4e7a-66ff-4312-b51b-66d7f6f1d6b2" />
 
-![Techem Dashboard Example](https://via.placeholder.com/800x400?text=Dashboard+Example)
 
 ## Features
 
