@@ -44,10 +44,6 @@ async def async_setup_entry(
         update_interval=SCAN_INTERVAL,
     )
 
-    # Fetch initial data
-    await yearly_coordinator.async_config_entry_first_refresh()
-    await weekly_coordinator.async_config_entry_first_refresh()
-
     object_id = entry.data[CONF_OBJECT_ID]
 
     sensors = [
@@ -73,6 +69,11 @@ async def async_setup_entry(
     ]
 
     async_add_entities(sensors)
+
+    # Refresh coordinators asynchronously AFTER entities are added
+    hass.loop.create_task(yearly_coordinator.async_refresh())
+    hass.loop.create_task(weekly_coordinator.async_refresh())
+
 
 
 class TechemBaseSensor(CoordinatorEntity, SensorEntity):
