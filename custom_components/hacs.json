@@ -1,8 +1,0 @@
-{
-  "name": "Techem Energy Monitor",
-  "content_in_root": false,
-  "filename": "techem",
-  "render_readme": true,
-  "domains": ["sensor"],
-  "homeassistant": "2024.1.0"
-}

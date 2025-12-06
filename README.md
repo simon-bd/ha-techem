@@ -2,7 +2,7 @@
 
 A Home Assistant integration for monitoring energy and water consumption from Techem heating cost allocators.
 
-This integration provides real-time access to your Techem consumption data directly in Home Assistant with automatic updates every hour.
+This integration provides near real-time access to your Techem consumption data, with updates approximately every hour (depending on Techem meter reporting).
 
 <img width="1912" height="1207" alt="image" src="https://github.com/user-attachments/assets/01dc4e7a-66ff-4312-b51b-66d7f6f1d6b2" />
 
@@ -11,10 +11,10 @@ This integration provides real-time access to your Techem consumption data direc
 ## Features
 
 - ✅ **Easy Setup**: Configure through Home Assistant UI - no YAML required
-- ✅ **10 Sensors**: Comprehensive energy and water monitoring
+- ✅ **10 Sensors**: Access to your energy and water consumption as provided by Techem.
 - ✅ **Multi-Country**: Supports Denmark (.dk) and Norway (.no)
 - ✅ **Automatic Updates**: Data refreshes every hour
-- ✅ **Comparison Data**: Track usage vs. previous periods
+- ✅ **Comparison Data**: View consumption compared to previous periods based on Techem data.
 
 ## Sensors
 
@@ -83,8 +83,8 @@ Your Techem object ID (approx. 20 characters, base64-encoded string)
 3. Go to the **Network** tab
 4. Refresh the page (F5)
 5. Find a `graphql` request in the network list
-6. Click on it and view the **Payload** tab
-7. Look for `objectId` - copy the value (e.g., `cF9fMTYwNC51X18xMjc0MzQ`)
+6. Click on it and view the **Request** tab
+7. Look for `objectId` - copy the value (e.g., `dGZ4eE1UZTdOLjYxX18yMzQ1Njc4`)
 
 ### 4. Country
 Select your country:
