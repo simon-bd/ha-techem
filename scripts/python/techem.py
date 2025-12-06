@@ -18,7 +18,7 @@ def get_first_date_as_string() -> str:
 
 # Request token
 def get_token(techem_email: str, techem_password: str) -> str:
-    url = "https://techemadmin.no/analytics/graphql"
+    url = "https://techemadmin.dk/analytics/graphql"
 
     token_body = {
         "query": """
@@ -42,7 +42,7 @@ def get_token(techem_email: str, techem_password: str) -> str:
     token_headers = {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
-        "Referer": "https://beboer.techemadmin.no/",
+        "Referer": "https://beboer.techemadmin.dk/",
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
     }
@@ -84,7 +84,7 @@ def get_data(techem_email: str, techem_password: str, object_id: int, yearly: bo
         # Compare with previous seven days
         compare_period = "previous-period"
 
-    url = "https://techemadmin.no/analytics/graphql"
+    url = "https://techemadmin.dk/analytics/graphql"
 
     body = {
         "query": """
@@ -112,8 +112,8 @@ def get_data(techem_email: str, techem_password: str, object_id: int, yearly: bo
     headers = {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
-        "Origin": "https://beboer.techemadmin.no",
-        "Referer": "https://beboer.techemadmin.no/",
+        "Origin": "https://beboer.techemadmin.dk",
+        "Referer": "https://beboer.techemadmin.dk/",
         "Authorization": f"JWT {token}",
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
