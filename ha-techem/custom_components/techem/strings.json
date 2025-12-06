@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Techem Energy Monitor",
+        "description": "Enter your Techem credentials",
+        "data": {
+          "email": "Email",
+          "password": "Password",
+          "object_id": "Object ID",
+          "country": "Country"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid email or password"
+    }
+  }
+}

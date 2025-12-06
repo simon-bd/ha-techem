@@ -1,0 +1,11 @@
+{
+  "domain": "techem",
+  "name": "Techem Energy Monitor",
+  "codeowners": ["@simon-bd"],
+  "config_flow": true,
+  "documentation": "https://github.com/simon-bd/ha-techem",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "requirements": ["requests==2.32.5"],
+  "version": "1.0.0"
+}
