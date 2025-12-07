@@ -130,3 +130,79 @@ class TechemAPI:
             _LOGGER.error("Failed to get data: %s", err)
         
         return None
+
+    def get_kpi_data(self, days_back: int = 30) -> dict | None:
+        """Get KPI data including room and meter breakdown."""
+        token = self.get_token()
+        if not token:
+            _LOGGER.error("Cannot get KPI data without token")
+            return None
+
+        today = datetime.datetime.now()
+        start = today - datetime.timedelta(days=days_back)
+        end = today - datetime.timedelta(days=1)  # Yesterday
+
+        body = {
+            "query": """
+                query UnitQuantityKPIs($input: UnitQuantityKPIsInput!) {
+                    unitQuantityKpis(input: $input) {
+                        total
+                        previousPeriod
+                        previousYear
+                        propertyComparison
+                        rooms {
+                            label
+                            value
+                        }
+                        meters {
+                            object {
+                                id
+                                group {
+                                    id
+                                    quantity
+                                    meter {
+                                        id
+                                        number
+                                        roomName
+                                    }
+                                }
+                            }
+                            value
+                        }
+                    }
+                }
+            """,
+            "variables": {
+                "input": {
+                    "objectId": self.object_id,
+                    "quantity": "hca",
+                    "periodBegin": start.strftime("%Y-%m-%d"),
+                    "periodEnd": end.strftime("%Y-%m-%d")
+                }
+            },
+            "operationName": "UnitQuantityKPIs"
+        }
+
+        headers = {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Content-Type": "application/json",
+            "Authorization": f"JWT {token}",
+            "Origin": self.referer.rstrip('/'),
+            "Referer": self.referer,
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+
+        try:
+            response = requests.post(self.url, headers=headers, json=body, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            
+            kpi_data = data.get("data", {}).get("unitQuantityKpis")
+            if kpi_data:
+                _LOGGER.debug("Successfully retrieved KPI data")
+                return kpi_data
+        except Exception as err:
+            _LOGGER.error("Failed to get KPI data: %s", err)
+        
+        return None

@@ -16,3 +16,11 @@ COUNTRIES = {
         "referer": "https://beboer.techemadmin.no/"
     }
 }
+
+# Sensor types
+SENSOR_TYPE_ENERGY = "energy"
+SENSOR_TYPE_WATER = "water"
+SENSOR_TYPE_HEAT = "heat"
+
+# Units  
+UNIT_HCA = "enh"  # Heat cost allocator units (enheder)
