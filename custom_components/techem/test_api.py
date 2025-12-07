@@ -15,7 +15,7 @@ COUNTRIES = {
     }
 }
 
-import logging
+import logging 
 import requests
 import datetime
 
