@@ -48,7 +48,7 @@ class TechemAPI:
 
         try:
             _LOGGER.debug("Attempting login to %s", self.url)
-            response = requests.post(self.url, headers=headers, json=token_body, timeout=10)
+            response = requests.post(self.url, headers=headers, json=token_body, timeout=30)
             response.raise_for_status()
             data = response.json()
             
@@ -118,7 +118,7 @@ class TechemAPI:
         }
 
         try:
-            response = requests.post(self.url, headers=headers, json=body, timeout=10)
+            response = requests.post(self.url, headers=headers, json=body, timeout=30)
             response.raise_for_status()
             data = response.json()
             
@@ -128,7 +128,7 @@ class TechemAPI:
                 return rows[0]
         except Exception as err:
             _LOGGER.error("Failed to get data: %s", err)
-        
+            raise
         return None
 
     def get_kpi_data(self, days_back: int = 30) -> dict | None:
@@ -194,7 +194,7 @@ class TechemAPI:
         }
 
         try:
-            response = requests.post(self.url, headers=headers, json=body, timeout=10)
+            response = requests.post(self.url, headers=headers, json=body, timeout=30)
             response.raise_for_status()
             data = response.json()
             
@@ -204,5 +204,6 @@ class TechemAPI:
                 return kpi_data
         except Exception as err:
             _LOGGER.error("Failed to get KPI data: %s", err)
+            raise
         
         return None
